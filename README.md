@@ -6,13 +6,13 @@ A rust crate for the core of Pigeon (the API). You should use this crate as a de
 
 ## Credits
 
-A project of the [Pigeon Protocol Consortium](https://tildegit.org/PigeonProtocolConsortium). See [the spec](https://tildegit.org/PigeonProtocolConsortium/Protocol-Spec) for further information.
+A project of the [PigeonProtocolConsortium](https://tildegit.org/PigeonProtocolConsortium). See [the spec](https://tildegit.org/PigeonProtocolConsortium/Protocol-Spec) for further information.
 
 ## License
 
 A rust crate for the core of Pigeon (the API).
 
-Copyright (C) 2020 PigenProtocolConsortium
+Copyright (C) 2020 PigeonProtocolConsortium
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU Affero General Public License as published by the Free
@@ -29,6 +29,7 @@ with this program. If not, see https://www.gnu.org/licenses/ .
 
 ### Official Channels
 
+- [PigeonProtocolConsortium](https://tildegit.org/PigeonProtocolConsortium)
 - [Source](https://tildegit.org/PigeonProtocolConsortium/pigeonrs_core)
 - [Issues](https://tildegit.org/PigeonProtocolConsortium/pigeonrs_core/issues)
 - [Core](https://tildegit.org/org/PigeonProtocolConsortium/teams/owners)
