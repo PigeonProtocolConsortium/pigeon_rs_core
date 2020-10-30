@@ -1,9 +1,10 @@
 [package]
-name = "pigeonrs_core"
+name = "pigeon_core"
 version = "0.1.0"
-authors = ["Michael Christenson II <michael@datagrail.io>"]
+authors = ["miirc"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ed25519-dalek = "1.0.1"
