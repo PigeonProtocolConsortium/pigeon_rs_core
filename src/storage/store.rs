@@ -53,10 +53,6 @@ mod tests {
         fs::create_dir_all(TMP_DIR)
     }
 
-    fn teardown_tmp_dir() -> Result<(), io::Error> {
-        fs::remove_dir(TMP_DIR)
-    }
-
     fn setup_tmp_file(name: &str, buf: Option<Vec<u8>>) -> Result<(), io::Error> {
         setup_tmp_dir()?;
         let t = SystemTime::now()
