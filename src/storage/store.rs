@@ -1,3 +1,4 @@
+#![allow(unused)]
 use std::fs;
 use std::io::{prelude::*, Error, ErrorKind};
 
@@ -28,11 +29,13 @@ impl Store {
         }
         let mut f = fs::OpenOptions::new()
             .append(true)
-            .read(true)
             .create(true)
             .open(&self.path)?;
-        match f.read(&mut self.buffer) {
-            Ok(_) => Ok(()),
+        match fs::read(&self.path) {
+            Ok(buff) => {
+                self.buffer = buff;
+                Ok(())
+            }
             Err(err) => Err(err),
         }
     }
@@ -53,16 +56,20 @@ mod tests {
         fs::create_dir_all(TMP_DIR)
     }
 
-    fn setup_tmp_file(name: &str, buf: Option<Vec<u8>>) -> Result<(), io::Error> {
+    fn setup_tmp_file(name: &str, buf: Option<Vec<u8>>) -> Result<String, io::Error> {
         setup_tmp_dir()?;
         let t = SystemTime::now()
             .duration_since(SystemTime::UNIX_EPOCH)
             .unwrap();
         let now = format!("{}-{:?}", name, t);
         let path = format_file_name(&now);
-        match buf {
-            Some(c) => fs::write(path, c),
-            None => fs::write(path, ""),
+        let result = match buf {
+            Some(c) => fs::write(path.clone(), c),
+            None => fs::write(path.clone(), ""),
+        };
+        match result {
+            Err(err) => Err(err),
+            _ => Ok(path),
         }
     }
 
@@ -71,7 +78,7 @@ mod tests {
     }
 
     #[test]
-    fn test_store_new() {
+    fn returns_new_store() {
         let s = Store::new();
         let e = Store {
             path: String::default(),
@@ -81,9 +88,9 @@ mod tests {
     }
 
     #[test]
-    fn test_store_from() {
+    fn returns_store_with_path() {
         let path = String::from("foo");
-        let s = Store::from(path.to_owned());
+        let s = Store::from(path.clone());
         let e = Store {
             path: path,
             buffer: vec![],
@@ -92,7 +99,7 @@ mod tests {
     }
 
     #[test]
-    fn test_store_open_no_path() {
+    fn store_open_errors_with_empty_path() {
         let mut s = Store::new();
         let resp = s.open();
         assert_eq!(true, resp.is_err());
@@ -101,7 +108,7 @@ mod tests {
     }
 
     #[test]
-    fn test_store_open_create() {
+    fn store_open_creates_new_file() {
         setup_tmp_dir().unwrap();
         let t = SystemTime::now()
             .duration_since(SystemTime::UNIX_EPOCH)
@@ -114,5 +121,16 @@ mod tests {
         let eb: Vec<u8> = vec![];
         assert_eq!(eb, s.buffer);
         teardown_tmp_file(&now);
+    }
+
+    #[test]
+    fn store_open_loads_existing_file() {
+        let buf: Vec<u8> = "i exist".as_bytes().to_vec();
+        let p = setup_tmp_file("store_load_existing", Some(buf.clone()));
+        assert_eq!(true, p.is_ok());
+        let mut s = Store::from(p.unwrap());
+        let resp = s.open();
+        assert_eq!(true, resp.is_ok());
+        assert_eq!(buf, s.buffer);
     }
 }
