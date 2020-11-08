@@ -39,6 +39,10 @@ impl Store {
             Err(err) => Err(err),
         }
     }
+
+    pub fn save(&mut self) -> Result<(), Error> {
+        fs::write(self.path.clone(), self.buffer.clone())
+    }
 }
 
 #[cfg(test)]
@@ -132,5 +136,57 @@ mod tests {
         let resp = s.open();
         assert_eq!(true, resp.is_ok());
         assert_eq!(buf, s.buffer);
+    }
+    
+    #[test]
+    fn store_save_create_new_file() {
+        fn setup_path() -> String {
+            let name = "store_save_create_new_file";
+            let t = SystemTime::now()
+                .duration_since(SystemTime::UNIX_EPOCH)
+                .unwrap();
+            let now = format!("{}-{:?}", name, t);
+            format_file_name(&now)
+        }
+        let buf = "It's a strange time to be created".as_bytes().to_vec();
+        let path = setup_path();
+        let mut s = Store::from(path.clone());
+        s.buffer = buf.clone();
+        assert_eq!(buf.clone(), s.buffer);
+        let mut resp = s.save();
+        assert_eq!(true, resp.is_ok());
+
+        let mut s = Store::from(path);
+        let mut resp = s.open();
+        assert_eq!(true, resp.is_ok());
+        assert_eq!(buf, s.buffer);
+    }
+
+    #[test]
+    fn store_save_updates_existing_file() {
+        let buf: Vec<u8> = "i exist".as_bytes().to_vec();
+        fn setup_buffer(buf: Vec<u8>) -> String {
+            let p = setup_tmp_file("store_load_existing", Some(buf.clone()));
+            assert_eq!(true, p.is_ok());
+            p.unwrap()
+        }
+        fn setup_store(path: String) -> Store {
+            let mut s = Store::from(path);
+            let resp = s.open();
+            assert_eq!(true, resp.is_ok());
+            s
+        }
+        let path = setup_buffer(buf.clone());
+        let mut s = setup_store(path.clone());
+        assert_eq!(buf.clone(), s.buffer);
+
+        let new_buf = "I exist!".as_bytes().to_vec();
+        s.buffer = new_buf.clone();
+        let resp = s.save();
+        assert_eq!(true, resp.is_ok());
+
+        let mut s = setup_store(path);
+        assert_ne!(buf, s.buffer);
+        assert_eq!(new_buf, s.buffer);
     }
 }
