@@ -1,6 +1,8 @@
 #![allow(unused)]
+use regex;
 use std::fs;
 use std::io::{prelude::*, Error, ErrorKind};
+use std::path;
 
 #[derive(Debug, PartialEq)]
 pub struct Store {
@@ -18,7 +20,7 @@ impl Store {
 
     pub fn from(path: String) -> Store {
         Store {
-            path,
+            path: Store::normalize_path(path),
             buffer: vec![],
         }
     }
@@ -27,11 +29,13 @@ impl Store {
         if self.path.is_empty() {
             return Err(Error::new(ErrorKind::InvalidInput, "empty path for store"));
         }
+        let p = self.path.clone();
+        Store::ensure_dir(p.clone());
         let mut f = fs::OpenOptions::new()
             .append(true)
             .create(true)
-            .open(&self.path)?;
-        match fs::read(&self.path) {
+            .open(p.clone())?;
+        match fs::read(p) {
             Ok(buff) => {
                 self.buffer = buff;
                 Ok(())
@@ -41,23 +45,48 @@ impl Store {
     }
 
     pub fn save(&mut self) -> Result<(), Error> {
-        fs::write(self.path.clone(), self.buffer.clone())
+        Store::ensure_dir(self.path.clone());
+        fs::write(
+            Store::normalize_path(self.path.clone()),
+            self.buffer.clone(),
+        )
+    }
+
+    fn normalize_path(p: String) -> String {
+        let re = regex::Regex::new(r"[\\,/]+").unwrap();
+        let sep = path::MAIN_SEPARATOR.to_string();
+        re.replace_all(p.as_str(), sep.as_str()).to_string()
+    }
+
+    fn ensure_dir(p: String) {
+        let np = Store::normalize_path(p);
+        let pa = path::PathBuf::from(np);
+        if !pa.exists() {
+            fs::create_dir_all(pa.parent().unwrap());
+        };
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::Store;
-    use std::{fs, io, time::SystemTime};
+    use regex;
+    use std::{fs, io, iter::FromIterator, path, path::MAIN_SEPARATOR, time::SystemTime};
 
-    const TMP_DIR: &str = "/tmp/pigeon_core/test_data/storage/store";
+    const TMP_DIR: [&'static str; 5] = ["/tmp", "pigeon_core", "test_data", "storage", "store"];
 
     fn format_file_name(name: &str) -> String {
-        format!("{}/{}", TMP_DIR, name)
+        let sep = String::from(MAIN_SEPARATOR.clone());
+        let mut pc: Vec<&str> = vec![];
+        for dir in TMP_DIR.to_vec() {
+            pc.push(dir);
+        }
+        pc.push(name);
+        pc.join(&sep)
     }
 
     fn setup_tmp_dir() -> Result<(), io::Error> {
-        fs::create_dir_all(TMP_DIR)
+        fs::create_dir_all(TMP_DIR.join(MAIN_SEPARATOR.to_string().as_str()))
     }
 
     fn setup_tmp_file(name: &str, buf: Option<Vec<u8>>) -> Result<String, io::Error> {
@@ -113,18 +142,21 @@ mod tests {
 
     #[test]
     fn store_open_creates_new_file() {
-        setup_tmp_dir().unwrap();
-        let t = SystemTime::now()
-            .duration_since(SystemTime::UNIX_EPOCH)
-            .unwrap();
-        let now = format!("{:?}", t);
-        let path = format_file_name(&now);
-        let mut s = Store::from(path);
+        fn setup_path() -> String {
+            let name = "store_open_creates_new_file";
+            let t = SystemTime::now()
+                .duration_since(SystemTime::UNIX_EPOCH)
+                .unwrap();
+            let now = format!("{}-{:?}", name, t);
+            format_file_name(&now)
+        }
+        let path = setup_path();
+        let mut s = Store::from(path.clone());
         let resp = s.open();
         assert_eq!(false, resp.is_err());
         let eb: Vec<u8> = vec![];
         assert_eq!(eb, s.buffer);
-        teardown_tmp_file(&now);
+        teardown_tmp_file(&*path);
     }
 
     #[test]
@@ -132,12 +164,14 @@ mod tests {
         let buf: Vec<u8> = "i exist".as_bytes().to_vec();
         let p = setup_tmp_file("store_load_existing", Some(buf.clone()));
         assert_eq!(true, p.is_ok());
-        let mut s = Store::from(p.unwrap());
+        let path = p.unwrap();
+        let mut s = Store::from(path.clone());
         let resp = s.open();
         assert_eq!(true, resp.is_ok());
         assert_eq!(buf, s.buffer);
+        teardown_tmp_file(&*path);
     }
-    
+
     #[test]
     fn store_save_create_new_file() {
         fn setup_path() -> String {
@@ -148,25 +182,26 @@ mod tests {
             let now = format!("{}-{:?}", name, t);
             format_file_name(&now)
         }
-        let buf = "It's a strange time to be created".as_bytes().to_vec();
         let path = setup_path();
+        let buf = "It's a strange time to be created".as_bytes().to_vec();
         let mut s = Store::from(path.clone());
         s.buffer = buf.clone();
         assert_eq!(buf.clone(), s.buffer);
         let mut resp = s.save();
         assert_eq!(true, resp.is_ok());
 
-        let mut s = Store::from(path);
+        let mut s = Store::from(path.clone());
         let mut resp = s.open();
         assert_eq!(true, resp.is_ok());
         assert_eq!(buf, s.buffer);
+        teardown_tmp_file(&*path);
     }
 
     #[test]
     fn store_save_updates_existing_file() {
         let buf: Vec<u8> = "i exist".as_bytes().to_vec();
         fn setup_buffer(buf: Vec<u8>) -> String {
-            let p = setup_tmp_file("store_load_existing", Some(buf.clone()));
+            let p = setup_tmp_file("store_save_updates_existing_file", Some(buf.clone()));
             assert_eq!(true, p.is_ok());
             p.unwrap()
         }
@@ -185,8 +220,25 @@ mod tests {
         let resp = s.save();
         assert_eq!(true, resp.is_ok());
 
-        let mut s = setup_store(path);
+        let mut s = setup_store(path.clone());
         assert_ne!(buf, s.buffer);
         assert_eq!(new_buf, s.buffer);
+        teardown_tmp_file(&*path);
+    }
+
+    #[test]
+    fn store_normalize_path() {
+        let re = regex::Regex::new(r"[\\,/]+").unwrap();
+        let sep = "\\";
+        let op = format_file_name("store_normalize_path");
+        let e = op.clone();
+        let mut a = op.clone().to_owned();
+        println!("{}, {}, {}", op.clone(), e.clone(), a.clone());
+        a = re.replace_all(a.as_str(), sep).to_string();
+        assert_ne!(e, a);
+
+        let r = Store::normalize_path(a.clone().to_owned());
+        assert_ne!(a, r);
+        assert_eq!(e, r);
     }
 }

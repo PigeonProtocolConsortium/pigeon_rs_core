@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 ed25519-dalek = "1.0.1"
+regex = "1"
