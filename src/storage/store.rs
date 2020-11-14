@@ -1,7 +1,7 @@
 #![allow(unused)]
 
 use std::fs;
-use std::io::{Error, ErrorKind, prelude::*};
+use std::io::{prelude::*, Error, ErrorKind};
 use std::path;
 
 use regex;
@@ -33,7 +33,7 @@ impl Store {
         }
         let p = self.path.clone();
         Store::ensure_dir(p.clone());
-        let mut f = fs::OpenOptions::new()
+        let f = fs::OpenOptions::new()
             .append(true)
             .create(true)
             .open(p.clone())?;
@@ -71,11 +71,9 @@ impl Store {
 
 #[cfg(test)]
 mod tests {
-    use std::{fs, io, iter::FromIterator, path, path::MAIN_SEPARATOR, time::SystemTime};
-
-    use regex;
-
     use super::Store;
+    use regex;
+    use std::{fs, io, iter::FromIterator, path, path::MAIN_SEPARATOR, time::SystemTime};
 
     const TMP_DIR: [&'static str; 5] = ["/tmp", "pigeon_core", "test_data", "storage", "store"];
 
