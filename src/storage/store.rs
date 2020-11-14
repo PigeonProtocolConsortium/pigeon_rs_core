@@ -125,7 +125,7 @@ mod tests {
         let path = String::from("foo");
         let s = Store::from(path.clone());
         let e = Store {
-            path: path,
+            path,
             buffer: vec![],
         };
         assert_eq!(e, s);
