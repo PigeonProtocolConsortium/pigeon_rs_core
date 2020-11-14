@@ -1,8 +1,10 @@
 #![allow(unused)]
-use regex;
+
 use std::fs;
-use std::io::{prelude::*, Error, ErrorKind};
+use std::io::{Error, ErrorKind, prelude::*};
 use std::path;
+
+use regex;
 
 #[derive(Debug, PartialEq)]
 pub struct Store {
@@ -69,9 +71,11 @@ impl Store {
 
 #[cfg(test)]
 mod tests {
-    use super::Store;
-    use regex;
     use std::{fs, io, iter::FromIterator, path, path::MAIN_SEPARATOR, time::SystemTime};
+
+    use regex;
+
+    use super::Store;
 
     const TMP_DIR: [&'static str; 5] = ["/tmp", "pigeon_core", "test_data", "storage", "store"];
 

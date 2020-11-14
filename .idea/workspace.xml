@@ -35,7 +35,8 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c707f519-d54c-4e1f-b3df-6e6186ea7625" name="Default Changelist" comment="Minor linting">
+    <list default="true" id="c707f519-d54c-4e1f-b3df-6e6186ea7625" name="Default Changelist" comment="Added workspace config">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/storage/store.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/store.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,8 +65,21 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
-    <property name="settings.editor.selected.configurable" value="dynamic.analysis.tools.profiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="view" />
+      <command value="settings" />
+    </option>
   </component>
   <component name="RunManager" selected="Cargo.Test">
     <configuration name="Run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" nameIsGenerated="true">
@@ -104,6 +118,11 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Cargo.Test" />
       <item itemvalue="Cargo.Test (nightly)" />
@@ -121,7 +140,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1605319852432</updated>
-      <workItem from="1605319854115" duration="1057000" />
+      <workItem from="1605319854115" duration="2136000" />
     </task>
     <task id="LOCAL-00001" summary="Added CLion debugger and coverage">
       <created>1605320835224</created>
@@ -137,7 +156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605320903621</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added workspace config">
+      <created>1605320940070</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1605320940070</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,9 +183,18 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added CLion debugger and coverage" />
     <MESSAGE value="Minor linting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor linting" />
+    <MESSAGE value="Added workspace config" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added workspace config" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="452" y="22" width="591" height="978" key="#Editor_|_Color_Scheme_|_General" timestamp="1605321223664">
+      <screen x="0" y="27" width="1500" height="973" />
+    </state>
+    <state x="452" y="22" width="591" height="978" key="#Editor_|_Color_Scheme_|_General/0.27.1500.973@0.27.1500.973" timestamp="1605321223664" />
+    <state x="382" y="195" width="732" height="649" key="#Inspections" timestamp="1605321343189">
+      <screen x="0" y="27" width="1500" height="973" />
+    </state>
+    <state x="382" y="195" width="732" height="649" key="#Inspections/0.27.1500.973@0.27.1500.973" timestamp="1605321343189" />
     <state x="212" y="149" width="1076" height="692" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605320699754">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
@@ -168,46 +203,54 @@
       <screen x="0" y="27" width="1500" height="973" />
     </state>
     <state x="100" y="117" width="1300" height="778" key="DiffContextDialog/0.27.1500.973@0.27.1500.973" timestamp="1605320910805" />
-    <state width="1454" height="249" key="GridCell.Tab.0.bottom" timestamp="1605320711590">
+    <state width="1454" height="308" key="GridCell.Tab.0.bottom" timestamp="1605321990821">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
-    <state width="1454" height="249" key="GridCell.Tab.0.bottom/0.27.1500.973@0.27.1500.973" timestamp="1605320711590" />
-    <state width="1454" height="249" key="GridCell.Tab.0.center" timestamp="1605320711587">
+    <state width="1454" height="308" key="GridCell.Tab.0.bottom/0.27.1500.973@0.27.1500.973" timestamp="1605321990821" />
+    <state width="1454" height="308" key="GridCell.Tab.0.center" timestamp="1605321990821">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
-    <state width="1454" height="249" key="GridCell.Tab.0.center/0.27.1500.973@0.27.1500.973" timestamp="1605320711587" />
-    <state width="1454" height="249" key="GridCell.Tab.0.left" timestamp="1605320711586">
+    <state width="1454" height="308" key="GridCell.Tab.0.center/0.27.1500.973@0.27.1500.973" timestamp="1605321990821" />
+    <state width="1454" height="308" key="GridCell.Tab.0.left" timestamp="1605321990820">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
-    <state width="1454" height="249" key="GridCell.Tab.0.left/0.27.1500.973@0.27.1500.973" timestamp="1605320711586" />
-    <state width="1454" height="249" key="GridCell.Tab.0.right" timestamp="1605320711589">
+    <state width="1454" height="308" key="GridCell.Tab.0.left/0.27.1500.973@0.27.1500.973" timestamp="1605321990820" />
+    <state width="1454" height="308" key="GridCell.Tab.0.right" timestamp="1605321990821">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
-    <state width="1454" height="249" key="GridCell.Tab.0.right/0.27.1500.973@0.27.1500.973" timestamp="1605320711589" />
-    <state width="1454" height="308" key="GridCell.Tab.1.bottom" timestamp="1605320708706">
+    <state width="1454" height="308" key="GridCell.Tab.0.right/0.27.1500.973@0.27.1500.973" timestamp="1605321990821" />
+    <state width="1454" height="308" key="GridCell.Tab.1.bottom" timestamp="1605321990823">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
-    <state width="1454" height="308" key="GridCell.Tab.1.bottom/0.27.1500.973@0.27.1500.973" timestamp="1605320708706" />
-    <state width="1454" height="308" key="GridCell.Tab.1.center" timestamp="1605320708706">
+    <state width="1454" height="308" key="GridCell.Tab.1.bottom/0.27.1500.973@0.27.1500.973" timestamp="1605321990823" />
+    <state width="1454" height="308" key="GridCell.Tab.1.center" timestamp="1605321990822">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
-    <state width="1454" height="308" key="GridCell.Tab.1.center/0.27.1500.973@0.27.1500.973" timestamp="1605320708706" />
-    <state width="1454" height="308" key="GridCell.Tab.1.left" timestamp="1605320708705">
+    <state width="1454" height="308" key="GridCell.Tab.1.center/0.27.1500.973@0.27.1500.973" timestamp="1605321990822" />
+    <state width="1454" height="308" key="GridCell.Tab.1.left" timestamp="1605321990821">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
-    <state width="1454" height="308" key="GridCell.Tab.1.left/0.27.1500.973@0.27.1500.973" timestamp="1605320708705" />
-    <state width="1454" height="308" key="GridCell.Tab.1.right" timestamp="1605320708706">
+    <state width="1454" height="308" key="GridCell.Tab.1.left/0.27.1500.973@0.27.1500.973" timestamp="1605321990821" />
+    <state width="1454" height="308" key="GridCell.Tab.1.right" timestamp="1605321990822">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
-    <state width="1454" height="308" key="GridCell.Tab.1.right/0.27.1500.973@0.27.1500.973" timestamp="1605320708706" />
-    <state x="242" y="144" width="1016" height="742" key="SettingsEditor" timestamp="1605320578522">
+    <state width="1454" height="308" key="GridCell.Tab.1.right/0.27.1500.973@0.27.1500.973" timestamp="1605321990822" />
+    <state x="242" y="139" width="1016" height="742" key="SettingsEditor" timestamp="1605321805246">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
-    <state x="242" y="144" width="1016" height="742" key="SettingsEditor/0.27.1500.973@0.27.1500.973" timestamp="1605320578522" />
-    <state x="348" y="231" width="800" height="568" key="Vcs.Push.Dialog.v2" timestamp="1605320910320">
+    <state x="242" y="139" width="1016" height="742" key="SettingsEditor/0.27.1500.973@0.27.1500.973" timestamp="1605321805246" />
+    <state x="348" y="226" width="800" height="568" key="Vcs.Push.Dialog.v2" timestamp="1605320947077">
       <screen x="0" y="27" width="1500" height="973" />
     </state>
-    <state x="348" y="231" width="800" height="568" key="Vcs.Push.Dialog.v2/0.27.1500.973@0.27.1500.973" timestamp="1605320910320" />
+    <state x="348" y="226" width="800" height="568" key="Vcs.Push.Dialog.v2/0.27.1500.973@0.27.1500.973" timestamp="1605320947077" />
+    <state x="414" y="229" width="672" height="677" key="run.anything.popup" timestamp="1605321916476">
+      <screen x="0" y="27" width="1500" height="973" />
+    </state>
+    <state x="414" y="229" width="672" height="677" key="run.anything.popup/0.27.1500.973@0.27.1500.973" timestamp="1605321916476" />
+    <state x="413" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1605321872956">
+      <screen x="0" y="27" width="1500" height="973" />
+    </state>
+    <state x="413" y="235" width="672" height="678" key="search.everywhere.popup/0.27.1500.973@0.27.1500.973" timestamp="1605321872956" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/pigeon_core$Test__nightly_.info" NAME="Test (nightly) Coverage Results" MODIFIED="1605320383353" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="RsCoverageRunner" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" CONTEXT_FILE_PATH="$PROJECT_DIR$" />
