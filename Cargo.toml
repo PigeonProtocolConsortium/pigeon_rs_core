@@ -1,5 +1,5 @@
 [package]
-name = "pigeon_core"
+name = "pigeon_rs_core"
 version = "0.1.1"
 authors = ["Michael Christenson II <xorsense@pm.me>"]
 edition = "2018"
